@@ -27,7 +27,10 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
-    return Form(
+    return Scaffold(
+      body: Center(
+        child: Card(
+          child: Form(
             key: _formState,
             autovalidateMode: autovalidateMode,
             child: Column(
@@ -118,12 +121,15 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ],
-              mainAxisAlignment: MainAxisAlignment.center,),
-
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+          ),
+        ),
+      ),
     );
   }
 
-  Future<void> _initializeLogin() async {
+  Future<void> _initializeLogin()  async {
     if (!_formState.currentState.validate()) return;
     setState(() {
       autovalidateMode = AutovalidateMode.always;
@@ -136,7 +142,7 @@ class _LoginState extends State<Login> {
       [phoneNumber, password],
     );
     if (data.length == 0) {
-      _sendAlert('User does exist');
+      _sendAlert('User does not exist');
       return;
     }
     Navigator.pushReplacement(
@@ -154,7 +160,8 @@ class _LoginState extends State<Login> {
 
   void _sendAlert(String s) {
     setState(() {
-      Container(
+      _errorWidget = Container(
+        
         height: 10,
         child: Text(s),
       );
